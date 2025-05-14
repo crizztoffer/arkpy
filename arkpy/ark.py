@@ -430,8 +430,8 @@ class ArkTribe:
             self.map_path = stream.readNullTerminatedString()
             stream.readBytes(20)
             var_name, var_type = stream.read_pair()
-            print var_name
-            print var_type
+            print(var_name)
+            print(var_type)
             struct = arktypes.load_struct(stream)
             struct.var_name = var_name
             self.data[var_name] = struct
