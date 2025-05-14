@@ -321,18 +321,18 @@ class ArkProfile:
                     self.header_size = stream.readInt32()
                     stream.readInt32()
                     # End of Header ----------------------------
-                    # print '----------------------------------'
+                    # print('----------------------------------')
                     var_name, var_type = stream.read_pair()
-                    # print var_name, var_type
+                    # print(var_name, var_type)
                     if var_type == 'StructProperty':
-                        # print 'Struct Property found'
+                        # print('Struct Property found')
                         struct = arktypes.load_struct(stream)
-                        # print struct.size
+                        # print(struct.size)
                         struct.var_name = var_name
 
                         self.data[var_name] = struct
                         # self.data = struct
-                    # print self.data
+                    # print(self.data)
                     # Only a null-terminated "None" + 4 NULL bytes remaining
                 else:
                     raise WrongFileType(
