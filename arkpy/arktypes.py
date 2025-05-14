@@ -34,7 +34,7 @@ def load_struct(stream):
 
 def load_property(stream):
     name, prop_type = stream.read_pair()
-    # print (name, prop_type)
+    # print(name, prop_type)
     if prop_type == 'StructProperty':
         return (name, prop_type, load_struct(stream))
     else:
@@ -44,7 +44,7 @@ def load_property(stream):
 class BaseProperty():
 
     def __init__(self, value=None):
-        # print 'Base Property init'
+        # print('Base Property init')
         self.value = value
         self.index = 0
         self.size = 0
@@ -137,10 +137,10 @@ class BaseStruct:
                     pass
                 self.data[name] = value
         if debug:
-            print '----------------------------------------'
-            print "Struct Type: %s" % self.__class__.__name__
-            print self.data
-            print '----------------------------------------'
+            print('----------------------------------------')
+            print("Struct Type: %s" % self.__class__.__name__)
+            print(self.data)
+            print('----------------------------------------')
 
     def _calc_inner_size(self):
         size = 0
@@ -154,7 +154,7 @@ class BaseStruct:
                     # try:
                     size = size + self.data[key]._calc_size()
                     # except TypeError:
-                    # print key
+                    # print(key)
         # NTString 'None' Bytes included
         self.size = size + 9
         return self.size
@@ -293,7 +293,7 @@ class ArrayProperty(BaseProperty):
                     try:
                         value = stream.readNullTerminatedString()
                     except struct.error:
-                        print 'Exception in array string handling'
+                        print('Exception in array string handling')
                         stream.base_stream.seek(pos, 0)
                         value = stream.readUnicodeString()
                 else:
@@ -306,7 +306,7 @@ class ArrayProperty(BaseProperty):
         return "[]<%s>(%s)" % (self.child_type, self.length)
 
     def _calc_inner_size(self):
-        print 'Calculating ArrayProperty Inner Size'
+        print('Calculating ArrayProperty Inner Size')
         size = 4
         for val in self.value:
             size = size + val._calc_inner_size()
@@ -668,10 +668,10 @@ class PrimalPlayerDataStruct(BaseStruct):
         self.data['MyPersistentCharacterStats']._exclude()
 
     def _write_to_stream(self, stream):
-        print 'calculating sizes'
+        print('calculating sizes')
         self._exclude()
         self._calc_size()
-        print 'writing player data struct'
+        print('writing player data struct')
         self._write_shared_struct_info(stream)
         self.data['PlayerDataID']._write_to_stream(stream)
         self.data['UniqueID']._write_to_stream(stream)
